@@ -50,7 +50,6 @@ def set_welcome_screen
 end
 
 def send_fb_text(user_id, text)
-  set_user_last_pauzz_msg(user_id,)
   send_fb_msg(user_id, {text: text})
 end
 
