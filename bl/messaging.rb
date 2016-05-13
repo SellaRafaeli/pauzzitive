@@ -30,13 +30,20 @@ def process_pre_state
   t = @text
   if t == 'ping' 
     respond('pong')
+  elsif text == 'version'
+    respond('0.0.1.1')
+  
+  elsif text == 'kinky'
+    respond(kinky_text)  
+  elsif t.include? "time"
+    respond('It is currently '+Time.now.strftime('%H:%M'))
+  
   elsif t.in? 'restart', 'begin', 'hi', 'help', 'hey'
     send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
     goto(Q_0)    
   elsif t.include_any? 'ask me', 'question'
-    goto(Q_ASK_QUESTION)    
-  elsif t.include? "time"
-    respond('It is currently '+Time.now.strftime('%H:%M'))
+    goto(Q_ASK_QUESTION)      
+  
   elsif t.include_any? 'state'
     user = $users.get(@user_id)
     respond(user)
@@ -89,9 +96,7 @@ def handle_msg
   # response_msg = "I got: #{text}. In reverse it is: #{text.reverse}"
   
   #randoms
-  response_msg = LiterateRandomizer.sentence if text == 'random' rescue 'oopsie'
-  response_msg = kinky_text if text == 'test'
-  response_msg = '0.0.1.1' if text == 'version'  
+  
 
   #update state
 
