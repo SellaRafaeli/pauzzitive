@@ -25,7 +25,7 @@ def handle_msg
   elsif lm == 'what_you_craving'
     if text.split(' ').size == 1
       new_lm       = :sorry_youre_craving
-      response_msg = "Oh, I'm sorry to hear you're craving "+text.
+      response_msg = "Oh, I'm sorry to hear you're craving "+text
     else 
       response_msg = 'Sorry, what are you craving? Please use a single word.'
     end

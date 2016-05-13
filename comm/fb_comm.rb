@@ -55,8 +55,8 @@ end
 
 ## get 
 def fb_parse_msg_data(data)
-  user_id = data['entry'][0]['messaging'][0]['sender']['id'] rescue nil
-  text    = data['entry'][0]['messaging'][0]['message']['text'] rescue nil
+  user_id = data[:user_id] || data['entry'][0]['messaging'][0]['sender']['id'] rescue nil
+  text    = data[:text] || data['entry'][0]['messaging'][0]['message']['text'] rescue nil
   payload = data['entry'][0]['messaging'][0]['postback']['payload'] rescue nil
 
   {user_id: user_id, text: text, payload: payload}
