@@ -41,3 +41,11 @@ end
 get '/' do
   redirect '/admin'
 end
+
+def handle_msg_wrapper
+  print_msg 
+  return params['hub.challenge'] if params['hub.challenge']#TODO:verify token's legit
+  handle_msg
+rescue => e
+  {msg: "some error occurred", err: e.to_s, backtrace: e.backtrace[0..2]}
+end

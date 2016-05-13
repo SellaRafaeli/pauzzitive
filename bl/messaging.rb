@@ -1,18 +1,60 @@
-def handle_msg_wrapper
-  print_msg
-  ## TODO: check if verification token is legit
-  return params['hub.challenge'] if params['hub.challenge']
-  handle_msg
-rescue => e
-  {msg: "some error occurred"}
+# STATES
+Q_0 = :Q_0
+Q_ASK_QUESTION = :Q_ASK_QUESTION
+
+# get the data from the request
+def parse_msg
+  data = fb_parse_msg_data(params)
+  @user_id, @text = data[:user_id], data[:text].to_s
 end
 
+# processing that is unrelated to current state, just by the input.
+# may affect state change, may not. 
+def process_pre_state 
+  t = @text
+  if t == 'ping' 
+    respond('pong')
+  elsif t.include? 'restart'
+    set_state(Q_0)
+    respond('How much is 1+1?')
+  elsif t.include? 'ask me'
+    
+    respond('How much is 1+1?', Q_ASK_QUESTION)
+  elsif t.include? "time"
+    respond('It is currently '+Time.now.strftime('%H:%M'))
+  end
+end
+
+def process_by_state
+  @state = get_state
+end
+
+def process_msg
+  process_pre_state
+  process_by_state
+  process_post_state
+end
+
+def update_state
+
+end
+
+
+def respond(text, new_state = nil)
+  set_state(new_state) if new_state
+  send_fb_text(@user_id, text)
+end 
+
 def handle_msg
+  parse_msg
+  process_msg
+  update_state
+  respond_to_msg
+  #get data
+  
 
-  data = fb_parse_msg_data(params)
-  user_id, text = data[:user_id], data[:text].to_s
-
-  send_fb_text(user_id, 'pong') if text == 'ping'
+  #figure out what to do
+  handle_before_state(text)
 
   lm = last_message = get_user_last_pauzz_msg(user_id)
   new_lm = nil
@@ -37,10 +79,27 @@ def handle_msg
   response_msg = kinky_text if text == 'test'
   response_msg = '0.0.1' if text == 'version'  
 
+  #update state
+
+  #respond
   set_user_last_pauzz_msg(user_id, new_lm)
   send_fb_text(user_id, response_msg)
 end
 
+def handle_before_state(text)
+
+end
+
+
+def foo 
+  @foo = 789
+end
+
+def bar 
+  {res: @foo}
+end
+
 get '/foo' do
-  foo
+  z = 20
+  return 'foo'
 end
