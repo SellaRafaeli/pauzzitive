@@ -42,7 +42,7 @@ def set_welcome_screen
                 "buttons":[ {"type":"web_url", "title":"View Website", "url":"https://www.petersbowlerhats.com"}, 
                   {"type":"postback", "title":"Start Chatting", "payload":"DEVELOPER_DEFINED_PAYLOAD"} ] } ] }
               }}
-  text = {text: $what_are_you_craving }
+  text = {text: "Hey there. We're here to help you with your craving. Type 'hi' to start." }
   
   data = {"setting_type":"call_to_actions", "thread_state":"new_thread", 
           "call_to_actions":[{ "message": text}]}
