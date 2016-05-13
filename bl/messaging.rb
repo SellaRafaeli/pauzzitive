@@ -27,6 +27,7 @@ def handle_msg
       new_lm       = :sorry_youre_craving
       response_msg = "Oh, I'm sorry to hear you're craving "+text
     else 
+      new_lm       = 'what_you_craving'
       response_msg = 'Sorry, what are you craving? Please use a single word.'
     end
   end
