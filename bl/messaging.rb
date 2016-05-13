@@ -91,7 +91,7 @@ def handle_msg
   #randoms
   response_msg = LiterateRandomizer.sentence if text == 'random' rescue 'oopsie'
   response_msg = kinky_text if text == 'test'
-  response_msg = '0.0.1' if text == 'version'  
+  response_msg = '0.0.1.1' if text == 'version'  
 
   #update state
 
