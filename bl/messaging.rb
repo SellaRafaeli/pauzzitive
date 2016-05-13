@@ -13,9 +13,9 @@ def handle_msg
   user_id, text = data[:user_id], data[:text].to_s
 
   send_fb_text(user_id, 'pong') if text == 'ping'
-  
+
   lm = last_message = get_user_last_pauzz_msg(user_id)
-  
+  new_lm = nil
   #default
   response_msg = "I got: #{text}. In reverse it is: #{text.reverse}"
   
