@@ -26,6 +26,12 @@ class Array
 
   def to_simple_hash
     self.reduce({}) {|h,k| h[k.to_s] = k; h }.hwia
+  end  
+end
+
+class String
+  def include_any?(*strings)
+    Array(strings).any? {|str| self.include?(str) }
   end
 end
 

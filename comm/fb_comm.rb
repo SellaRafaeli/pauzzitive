@@ -13,7 +13,7 @@ def send_fb_msg(user_id, message_data)
   #data  = {recipient: {id: user_id}, message: message_data}
   data  = {recipient: {id: user_id}, message: message_data}
   route = FB_MSGING_ROUTE+"?access_token=#{FB_PAGE_TOKEN}"
-  http_post_json(route, data)  
+  http_post_json(route, data) if $prod
 end
 
 # send_fb_msg_options([ opt1, opt2])
