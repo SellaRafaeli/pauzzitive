@@ -30,7 +30,7 @@ def process_pre_state
   t = @text
   if t == 'ping' 
     respond('pong')
-  elsif t.include_any? 'restart', 'begin', 'hi', 'help', 'hey'
+  elsif t.in? 'restart', 'begin', 'hi', 'help', 'hey'
     goto(Q_0)    
   elsif t.include_any? 'ask me', 'question'
     goto(Q_ASK_QUESTION)    
@@ -74,6 +74,7 @@ def respond(text)
 end 
 
 def handle_msg
+  
   parse_msg
   process_msg
   #get data
