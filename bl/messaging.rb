@@ -62,7 +62,6 @@ def process_msg
   process_pre_state
   process_by_state
   goto(Q_0)    
-  #process_post_state
 end
 
 def goto(new_state, opts = {})
@@ -81,28 +80,9 @@ def respond(text)
   halt(200,{response: "#{text}", new_state:"#{user_state}"})
 end 
 
-def handle_msg
-  
+def handle_msg  
   parse_msg
   process_msg
-  #get data
-
-  #figure out what to do
-  # handle_before_state(text)
-
-  # lm = last_message = get_user_last_pauzz_msg(user_id)
-  # new_lm = nil
-  # #default
-  # response_msg = "I got: #{text}. In reverse it is: #{text.reverse}"
-  
-  #randoms
-  
-
-  #update state
-
-  #respond
-  set_user_last_pauzz_msg(user_id, new_lm)
-  send_fb_text(user_id, response_msg)
 end
 
 get '/foo' do
