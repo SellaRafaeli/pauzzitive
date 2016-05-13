@@ -8,7 +8,7 @@ Q_PLEASE_PAUSE = :Q_PLEASE_PAUSE
 def get_state_text(state, opts = {})
   case state
   when Q_0 
-    'Hey - what are you craving right now?'
+    'What are you craving right now?'
   when Q_ASK_QUESTION
     'How much is 1+1?'
   when Q_PLEASE_PAUSE
@@ -31,6 +31,7 @@ def process_pre_state
   if t == 'ping' 
     respond('pong')
   elsif t.in? 'restart', 'begin', 'hi', 'help', 'hey'
+    send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
     goto(Q_0)    
   elsif t.include_any? 'ask me', 'question'
     goto(Q_ASK_QUESTION)    

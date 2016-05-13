@@ -8,7 +8,7 @@ end
 
 def q_please_pause 
   if @text.include? 'done' 
-    send_fb_text(@user_id, 'Good job!')
+    send_msg(@user_id, 'Good job!')
     goto(Q_0, msg: "When you want to do this again, just say 'hi' ;)")
   else
     stay('Hmm, I didn\'t get that...?\nWhen you\'re done, say so :)')
