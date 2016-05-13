@@ -4,6 +4,7 @@ module Helpers
   def log_e(err, data = {})  
     err = {msg: err.to_s, backtrace: err.backtrace.to_a.slice(0,4)} if err.is_a? Exception
     err = {} unless err.is_a? Hash
+    puts err[:msg].to_s.red
     err[:user_id]  = cuid
     err[:path]     = request_path
     err[:params]   = JSON.parse(_params.to_json) #sometimes params has un-BSON able fields
