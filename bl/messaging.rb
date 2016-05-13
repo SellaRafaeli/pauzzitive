@@ -20,9 +20,9 @@ def handle_msg
   response_msg = "I got: #{text}. In reverse it is: #{text.reverse}"
   
   if text == 'hi' 
-    new_lm       = :what_you_craving
+    new_lm       = 'what_you_craving'
     response_msg = 'What are you craving?'  
-  elsif lm == :what_you_craving
+  elsif lm == 'what_you_craving'
     if text.split(' ').size == 1
       new_lm       = :sorry_youre_craving
       response_msg = "Oh, I'm sorry to hear you're craving "+text.
