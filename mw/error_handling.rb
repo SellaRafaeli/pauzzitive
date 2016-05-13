@@ -5,7 +5,6 @@ module Helpers
     err = {msg: err.to_s, backtrace: err.backtrace.to_a.slice(0,4)} if err.is_a? Exception
     err = {} unless err.is_a? Hash
     err[:user_id]  = cuid
-    err[:username] = cusername
     err[:path]     = request_path
     err[:params]   = JSON.parse(_params.to_json) #sometimes params has un-BSON able fields
     $errors.add(err)

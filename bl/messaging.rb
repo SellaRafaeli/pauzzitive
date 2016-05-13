@@ -36,7 +36,7 @@ def handle_msg
   response_msg = kinky_text if text == 'test'
   response_msg = '0.0.1' if text == 'version'  
 
-  set_user_last_pauzz_msg(new_lm)
+  set_user_last_pauzz_msg(user_id, new_lm)
   send_fb_text(user_id, response_msg)
 end
 
