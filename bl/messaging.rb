@@ -28,7 +28,6 @@ end
 # may affect state change, may not. 
 def process_pre_state 
   t = @text
-  bp
   if t == 'ping' 
     respond('pong')
   elsif t == 'version'
@@ -44,7 +43,7 @@ def process_pre_state
     goto(Q_ASK_QUESTION)      
   elsif t.include_any? 'state'
     user = $users.get(@user_id)
-    respond(user)
+    respond(user.to_json)
   end
 rescue => e
 end
