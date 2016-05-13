@@ -21,6 +21,8 @@ require_all './db'
 require_all './mw'
 require_all './comm'
 require_all './bl'
+require_all './admin'
+require_all './logging'
 
 include Helpers
 
@@ -29,7 +31,6 @@ get '/ping' do
 end
 
 # fb app token: EAAOxuLF0mJkBAH8r1ykzjhq5xeZCQ6WEZAb7TtcWNQ2eZBW887Lf9AYW3a10WvIJLWsD3uiXT9TZBgZAPwi2adBxCBLr14hVHorjjedy3W6gEPM6Gg3ZCUBfcHLFo6tZCu4fflBYIHfofzqoQ67W2pZABd87GLUSJCeFIIkTgGLeOAZDZD
-
 
 def print_msg
   puts Time.now.to_s
