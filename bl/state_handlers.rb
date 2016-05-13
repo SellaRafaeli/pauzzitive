@@ -8,7 +8,7 @@ end
 
 def q_please_pause 
   if @text.include? 'done' 
-    goto(Q_0)
+    goto(Q_0, msg: "Good job! When you want to do this again, just say 'hi' ;)")
   else
     stay('Hmm, I didn\'t get that...?\nWhen you\'re done, say so :)')
   end

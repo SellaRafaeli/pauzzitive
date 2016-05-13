@@ -59,7 +59,7 @@ end
 
 def goto(new_state, opts = {})
   set_state(new_state)
-  state_text = get_state_text(new_state, opts)
+  state_text = opts[:msg] || get_state_text(new_state, opts)
   respond(state_text)
 end
 
