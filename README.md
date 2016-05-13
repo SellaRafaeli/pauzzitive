@@ -1,6 +1,7 @@
 # pauzzitive - 
 
 FB app: https://developers.facebook.com/apps/1039831739439257/
+* callback URL: https://pauzzitive.herokuapp.com/webhook
 FB page: https://www.facebook.com/pauzzitive/?
 Chatbot docs: https://developers.facebook.com/docs/messenger-platform/implementation#setup
 
