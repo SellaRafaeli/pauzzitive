@@ -43,6 +43,7 @@ def set_welcome_screen
                   {"type":"postback", "title":"Start Chatting", "payload":"DEVELOPER_DEFINED_PAYLOAD"} ] } ] }
               }}
   text = {text: "Hey there. We're here to help you with your craving. Type 'hi' to start." }
+  text = {text: "Hey there! Welcome to Pauzzitive. We currently know how to handle 'ping', 'version', and 'time'." }
   
   data = {"setting_type":"call_to_actions", "thread_state":"new_thread", 
           "call_to_actions":[{ "message": text}]}

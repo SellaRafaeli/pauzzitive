@@ -8,7 +8,8 @@ Q_PLEASE_PAUSE = :Q_PLEASE_PAUSE
 def get_state_text(state, opts = {})
   case state
   when Q_0 
-    'What are you craving right now?'
+    #'What are you craving right now?'
+    'Hi! Welcome to Pauzz-Bot.'
   when Q_ASK_QUESTION
     'How much is 1+1?'
   when Q_PLEASE_PAUSE
