@@ -57,7 +57,7 @@ end
 
 def process_msg
   process_pre_state
-  process_by_state
+  #process_by_state #temporarily disabled although probably working, - 22.5, sr
   goto(Q_0)    
 end
 
