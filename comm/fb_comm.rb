@@ -1,19 +1,25 @@
 # pauzzitive
-FB_PAGE_TOKEN = ENV['FB_PAGE_TOKEN']
+FB_PAGE_TOKEN   = ENV['FB_PAGE_TOKEN']
+FB_VERIFY_TOKEN = ENV['FB_VERIFY_TOKEN']
 FB_PAGE_ID    = 492664237595026
 FB_MSGING_ROUTE      = 'https://graph.facebook.com/v2.6/me/messages'
 FB_PAGE_ROUTE        = "https://graph.facebook.com/v2.6/#{FB_PAGE_ID}/thread_settings?access_token=#{FB_PAGE_TOKEN}"
 SELLA_USER_ID = '997788726969575'
 
-# send
+include Facebook::Messenger #https://github.com/hyperoslo/facebook-messenger
+Facebook::Messenger.config.access_token = FB_PAGE_TOKEN
+#Facebook::Messenger.config.app_secret = '__app_secret_here__'
+Facebook::Messenger.config.verify_token = 'my_voice_is_my_password_verify_me'
 
-
-
-def send_fb_msg(user_id, message_data)
+def send_fb_msg_old(user_id, message_data)
   #data  = {recipient: {id: user_id}, message: message_data}
   data  = {recipient: {id: user_id}, message: message_data}
   route = FB_MSGING_ROUTE+"?access_token=#{FB_PAGE_TOKEN}"
   http_post_json(route, data) if $prod
+end
+
+def send_fb_msg(user_id, message_data)
+  Bot.deliver(recipient: {id: user_id}, message: message_data )
 end
 
 # send_fb_msg_options([ opt1, opt2])
