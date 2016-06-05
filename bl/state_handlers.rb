@@ -1,6 +1,7 @@
 # STATES
 
 INTRO = :INTRO 
+WHATS_YOUR_NAME = :WHATS_YOUR_NAME
 READY_TO_PAUZZ = :READY_TO_PAUZZ 
 GOODBYE1 = :GOODBYE1 
 PAUZZ_BY_ACTION = :PAUZZ_BY_ACTION 
@@ -23,7 +24,9 @@ START = INTRO
 def state_response(state, opts = {})
   case state
   when START  
-    "Hi, I'm Pauzz, your Pauzzitive friend... \nI'm here to help you with your cravings.\nLet's get started."
+    "Hi, I'm Pauzz, your Pauzzitive friend... \n\nI'm here to help you with your cravings.\n\nLet's get started.\n\n1.We'll Pauzz and surf that crave.\n2.We'll figure out your triggers.\n3.A Pauzzitive alternative will come your way.\n\nAre you ready?"
+  when WHATS_YOUR_NAME
+    "What's your name?"
   when READY_TO_PAUZZ
     "Alright #{opts[:name]}, are you ready to Pauzz?"
   when GOODBYE1
@@ -61,6 +64,10 @@ end
 
 # handler for LEAVING state, based on input
 def intro
+  goto(WHATS_YOUR_NAME)
+end
+
+def whats_your_name
   goto(READY_TO_PAUZZ, name: @text)
 end
 
