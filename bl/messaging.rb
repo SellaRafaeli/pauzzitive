@@ -1,24 +1,3 @@
-# STATES
-Q_0 = :Q_0
-Q_ASK_QUESTION = :Q_ASK_QUESTION
-Q_RIGHT_ANSWER = :Q_RIGHT_ANSWER
-Q_WRONG_ANSWER = :Q_WRONG_ANSWER
-Q_PLEASE_PAUSE = :Q_PLEASE_PAUSE
-
-def get_state_text(state, opts = {})
-  case state
-  when Q_0 
-    #'What are you craving right now?'
-    'Hi! Welcome to Pauzz-Bot.'
-  when Q_ASK_QUESTION
-    'How much is 1+1?'
-  when Q_PLEASE_PAUSE
-    "Sorry to hear you\'re craving #{opts[:craving]}. Please count to 17. When you\'re finished, say 'done'."
-  else 
-    "I really don't know what to say."
-  end
-end
-
 # get the data from the request
 def parse_msg
   data = fb_parse_msg_data(params)
@@ -38,10 +17,8 @@ def process_pre_state
   elsif t.include? "time"
     respond('It is currently '+Time.now.strftime('%H:%M'))
   elsif t.in? 'restart', 'begin', 'hi', 'help', 'hey'
-    send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
-    goto(Q_0)    
-  elsif t.include_any? 'ask me', 'question'
-    goto(Q_ASK_QUESTION)      
+    #send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
+    goto(START)    
   elsif t.include_any? 'state'
     user = $users.get(@user_id)
     respond(user.to_json)
@@ -50,7 +27,7 @@ rescue => e
 end
 
 def process_by_state
-  @state = get_state.downcase
+  @state = (params[:state] || get_state).downcase
   send(@state) if @state 
 rescue => e 
   log_e(e)
@@ -58,14 +35,14 @@ end
 
 def process_msg
   process_pre_state
-  #process_by_state #temporarily disabled although probably working, - 22.5, sr
-  goto(Q_0)    
+  process_by_state
+  goto(START) #if nothing else has registered
 end
 
 def goto(new_state, opts = {})
   set_state(new_state)
-  state_text = opts[:msg] || get_state_text(new_state, opts)
-  respond(state_text)
+  state_response_text = @rt || opts[:msg] || state_response(new_state, opts)
+  respond(state_response_text)
 end
 
 def stay(text)

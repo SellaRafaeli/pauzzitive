@@ -19,7 +19,7 @@ def send_fb_msg_old(user_id, message_data)
 end
 
 def send_fb_msg(user_id, message_data)
-  Bot.deliver(recipient: {id: user_id}, message: message_data )
+  Bot.deliver(recipient: {id: user_id}, message: message_data ) if $prod
 end
 
 # send_fb_msg_options([ opt1, opt2])
@@ -106,3 +106,5 @@ def test_fb_buttons
   msg  = 'Please pick an option.'
   send_fb_buttons(SELLA_USER_ID, msg, btns)
 end
+
+get '/comm/fb_comm' do {refresh: true} end
