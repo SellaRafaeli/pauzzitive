@@ -63,7 +63,7 @@ end
 def send_fb_text(user_id, text)
   texts = text.split("\n").select {|s| s.present? }
   texts.each {|t| 
-    sleep(rand); 
+    sleep(rand) if $prod 
     send_fb_msg(user_id, {text: t})
   }  
 end
