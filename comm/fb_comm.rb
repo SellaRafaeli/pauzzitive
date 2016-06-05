@@ -56,9 +56,18 @@ def set_welcome_screen
   http_post_json(FB_PAGE_ROUTE, data)   
 end
 
-def send_fb_text(user_id, text)
+def send_fb_text_old(user_id, text)
   send_fb_msg(user_id, {text: text})
 end
+
+def send_fb_text(user_id, text)
+  texts = text.split("\n").select {|s| s.present? }
+  texts.each {|t| 
+    sleep(rand); 
+    send_fb_msg(user_id, {text: text})
+  }  
+end
+
 
 ## get 
 def fb_parse_msg_data(data)

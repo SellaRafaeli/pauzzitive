@@ -28,11 +28,16 @@ def state_response(state, opts = {})
   when WHATS_YOUR_NAME
     "What's your name?"
   when READY_TO_PAUZZ
-    "Alright #{opts[:name]}, are you ready to Pauzz?"
+    name = get_user_attr(:name)
+    "Alright #{name},\n\nTime to Pauzz that craving. Are you ready?"
   when GOODBYE1
-    "OK, see you later!"
+    "OK! Perhaps another time....\n\n See you next time you're craving hits.\n\nLater..."
   when PAUZZ_BY_ACTION
-    "Ok, try yawning for five seconds... feels good huh?"
+    [
+      "Just yawn...\nWhen you yawn, your brain reboots just like you would reboot your computer...",
+      "Let's stretch.\nLift your hands up high and stretch your body.\nDoesn't it feel great to take a little Pauzz?",
+
+      ].sample
   when HIGH_FIVE
     "Good job! High five!"
   when LOCATION
@@ -68,7 +73,8 @@ def intro
 end
 
 def whats_your_name
-  goto(READY_TO_PAUZZ, name: @text)
+  set_user_attr(:name, @text)
+  goto(READY_TO_PAUZZ)
 end
 
 def ready_to_pauzz

@@ -34,6 +34,7 @@ rescue => e
 end
 
 def process_msg
+  sleep(2) if $prod #human-like delay 
   process_pre_state
   process_by_state
   goto(START) #if nothing else has registered
