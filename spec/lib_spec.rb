@@ -1,3 +1,4 @@
+# remember to run with bundle exec
 #require './app'
 Bundler.require
 # comm

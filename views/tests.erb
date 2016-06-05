@@ -1,0 +1,21 @@
+<%
+  tests = [
+   #[STATE, input, NEW_STATE] 
+    [INTRO, 'hi', INTRO]
+  ]
+%>
+
+<% tests.each do |test| %>
+
+<%
+  state, @text, new_state, opts = test[0], test[1], test[2], test[3] || {}
+  @user_id = 123
+  send(state.downcase)
+  new_state = @rt #response_text
+%>
+  <div class='border1 p10'>
+    <%= state %> (<%=@text%>): <%= new_state %>
+  </div>
+<% end %>
+
+

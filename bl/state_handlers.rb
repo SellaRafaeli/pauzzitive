@@ -23,7 +23,7 @@ START = INTRO
 def state_response(state, opts = {})
   case state
   when START  
-    'Hi! Welcome, what is your name?'
+    "Hi, I'm Pauzz, your Pauzzitive friend... \nI'm here to help you with your cravings.\nLet's get started."
   when READY_TO_PAUZZ
     "Alright #{opts[:name]}, are you ready to Pauzz?"
   when GOODBYE1
@@ -49,7 +49,7 @@ def state_response(state, opts = {})
   when EMOTIONS_INTENSITY_REFLECTION
     "Sorry you're feeling that way, let's find a better way to deal with it. Ready?"
   when CONNECTION_EMOTIONS_CRAVING
-    "Did you notice the connection between how badly you wanted your craing and the intensity of your emotion?"
+    "Did you notice the connection between how badly you wanted your craving and the intensity of your emotion?"
   when CONNECTION_NOTICED
     "I justed wanted to share that there is often a connection... don't you think?"
   when CONNECTION_DIDNT_NOTICE

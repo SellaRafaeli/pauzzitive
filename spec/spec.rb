@@ -16,14 +16,7 @@ POST_ID = 'FxCMAf5NbA'
 OTHER_USERNAME   = Faker::Name.name
 tests = {
   :ping => [GET, '/ping', {}],
-  :create_user => [PUT, '/api/users', {_method: 'put', name: Faker::Name.name, email: Faker::Internet.email, username: NEW_USERNAME_1}],
-  :get_existing_user => [GET, "/api/users/#{USER_ID}", {}],
-  :update_user => [POST, "/api/users/#{USER_ID}",{username: OTHER_USERNAME}],
-
-  :create_post => [PUT, '/api/posts', {user_id: USER_ID, text: 'hello world'}],
-  :get_post => [GET, "/api/posts/#{POST_ID}"],
-  :get_posts_by_user_id => [GET, "/api/posts/#{POST_ID}",{user_id: USER_ID}],
-  :get_posts_by_mongo_crit => [GET, '/api/posts', {mongo_crit_json: {"text": {"$regex": 'worl'}}.to_json}],
+  :restart => [GET, '/webhook?user_id=123&text=restart', {}],
 }
 
 def expected_results(idx, res)

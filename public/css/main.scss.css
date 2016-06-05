@@ -16,8 +16,8 @@
 .bg2 {
   background-color: blue; }
 
-.padding10 {
-  padding-left: 10px; }
+.p10 {
+  padding: 10px; }
 
 .centerText {
   text-align: center; }

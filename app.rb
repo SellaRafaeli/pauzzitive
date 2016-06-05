@@ -27,7 +27,7 @@ require_all './logging'
 include Helpers
 
 get '/ping' do
-  {msg: 'pong from pauzzitive', val: 123}
+  {pong: true, msg: 'pong from pauzzitive', val: 123}
 end
 
 get '/webhook' do
@@ -49,3 +49,4 @@ def handle_msg_wrapper
 rescue => e
   {msg: "some error occurred", err: e.to_s, backtrace: e.backtrace[0..2]}
 end
+

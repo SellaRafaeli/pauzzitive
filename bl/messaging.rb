@@ -16,7 +16,7 @@ def process_pre_state
     respond(kinky_text)  
   elsif t.include? "time"
     respond('It is currently '+Time.now.strftime('%H:%M'))
-  elsif t.in? 'restart', 'begin', 'hi', 'help', 'hey'
+  elsif t.in? 'restart', 'start'
     #send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
     goto(START)    
   elsif t.include_any? 'state'
@@ -41,7 +41,8 @@ end
 
 def goto(new_state, opts = {})
   set_state(new_state)
-  state_response_text = @rt || opts[:msg] || state_response(new_state, opts)
+  state_response_text = opts[:msg] || state_response(new_state, opts)
+  @rt = state_response_text #for tests
   respond(state_response_text)
 end
 
