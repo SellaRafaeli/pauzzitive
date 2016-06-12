@@ -3,7 +3,7 @@
 INTRO = :INTRO 
 WHATS_YOUR_NAME = :WHATS_YOUR_NAME
 READY_TO_PAUZZ = :READY_TO_PAUZZ 
-GOODBYE1 = :GOODBYE1 
+GOODBYE_NO_PAUZZ = :GOODBYE_NO_PAUZZ 
 PAUZZ_BY_ACTION = :PAUZZ_BY_ACTION 
 HIGH_FIVE = :HIGH_FIVE 
 LOCATION = :LOCATION 
@@ -15,10 +15,18 @@ WHAT_EMOTION_EXPERIENCING = :WHAT_EMOTION_EXPERIENCING
 EMOTIONS_INTENSITY = :EMOTIONS_INTENSITY 
 EMOTIONS_INTENSITY_REFLECTION = :EMOTIONS_INTENSITY_REFLECTION 
 CONNECTION_EMOTIONS_CRAVING = :CONNECTION_EMOTIONS_CRAVING 
-CONNECTION_NOTICED = :CONNECTION_NOTICED 
+#CONNECTION_NOTICED = :CONNECTION_NOTICED 
 CONNECTION_DIDNT_NOTICE = :CONNECTION_DIDNT_NOTICE 
-
+REFLECTION_AND_CHOICE = :REFLECTION_AND_CHOICE
 START = INTRO
+
+GOODBYE_SUCCESS = :GOODBYE_SUCCESS # successfully avoided craving 
+ACT_ON_CRAVING_MAYBE  = :ACT_ON_CRAVING_MAYBE
+ACT_ON_CRAVING_YES = :ACT_ON_CRAVING_YES
+GOODBYE_FAILURE = :GOODBYE_FAILURE
+ACT_ON_CRAVING_FEELING_BAD = :ACT_ON_CRAVING_FEELING_BAD
+
+ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 
 #response upon ENTERING state
 def state_response(state, opts = {})
@@ -34,7 +42,7 @@ def state_response(state, opts = {})
     "What's your name?"
   when READY_TO_PAUZZ    
     "Alright #{name},\n\nTime to Pauzz that craving. Are you ready?"
-  when GOODBYE1
+  when GOODBYE_NO_PAUZZ
     "OK! Perhaps another time....\n\n See you next time you're craving hits.\n\nLater..."
   when PAUZZ_BY_ACTION
     [
@@ -65,10 +73,22 @@ def state_response(state, opts = {})
     "Sorry you're feeling that way.\nlet's find a better way to deal with it. Ready?"
   when CONNECTION_EMOTIONS_CRAVING
     "Did you notice...\nthe connection between how badly you wanted your craving and the intensity of your emotion?"
-  when CONNECTION_NOTICED
-    "#{name}... I justed wanted to share that there is often a connection... don't you think?"
   when CONNECTION_DIDNT_NOTICE
+    "#{name}... I justed wanted to share that there is often a connection... don't you think?"
+  when REFLECTION_AND_CHOICE
     "It's now #{Time.now}, you're at #{location}, experiencing #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
+  when GOODBYE_SUCCESS
+    "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive..."
+  when ACT_ON_CRAVING_MAYBE
+    "To eat or not to eat...?\nTry to think what you would tell your best friend in this situation.\nIt is sometimes easier to give the perfect advice to a friend.\nAre you ready for your Pauzzitive alternative?"
+  when ACT_ON_CRAVING_YES
+    "OK then... before we say goodbye,\nI'm going to ask you one last question...\nHow are you going to feel in an hour if you act on your craving?"
+  when ACT_ON_CRAVING_FEELING_BAD
+    'Sorry to hear that. Wanna try a Pauzzitive alternative?'
+  when GOODBYE_FAILURE 
+    "Well, honesty is important.\nAnd you did a great job pauzzing back there!\nRemember, I'm always here when you want to Pauzz your craving. See you next time!"
+  when ALTERNATIVE_ACTION_MENU
+    "Go do something alternative! We\'re done here, go back to start."
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -87,13 +107,13 @@ end
 
 def ready_to_pauzz
   if @text == 'no'
-    goto(GOODBYE1) 
+    goto(GOODBYE_NO_PAUZZ) 
   else
     goto(PAUZZ_BY_ACTION)
   end
 end
 
-def goodbye1()                   goto(START) end
+def goodbye_no_pauzz()                   goto(START) end
 def pauzz_by_action()            goto(HIGH_FIVE) end
 def high_five()                  goto(LOCATION) end
 
@@ -128,13 +148,49 @@ def emotions_intensity_reflection() goto(CONNECTION_EMOTIONS_CRAVING) end
 
 def connection_emotions_craving() 
   if (@text == 'no') 
-    goto(CONNECTION_NOTICED) 
-  else 
     goto(CONNECTION_DIDNT_NOTICE)
+  else 
+    goto(REFLECTION_AND_CHOICE)
   end
 end
 
-def connection_noticed() goto(START) end
-def connection_didnt_notice() goto(START) end
+def connection_didnt_notice() goto(REFLECTION_AND_CHOICE) end
+
+def reflection_and_choice
+  if (@text == 'no') 
+    goto(GOODBYE_SUCCESS)
+  elsif (@text == 'maybe') 
+    goto(ACT_ON_CRAVING_MAYBE)
+  else #yes
+    goto(ACT_ON_CRAVING_YES)
+  end
+end
+
+def goodbye_success() goto(START) end
+def goodbye_failure() goto(START) end
+
+def act_on_craving_yes
+  if (@text == 'good') 
+    goto(GOODBYE_FAILURE)
+  else 
+    goto(ACT_ON_CRAVING_FEELING_BAD)
+  end
+end
+
+def act_on_craving_feeling_bad
+  if (@text == 'no') 
+    goto(GOODBYE_FAILURE)    
+  else
+    goto(ALTERNATIVE_ACTION_MENU)
+  end
+end
+
+def act_on_craving_maybe 
+  goto(ALTERNATIVE_ACTION_MENU)
+end
+
+def alternative_action_menu
+  goto(START)
+end
 
 get '/bla' do {refresh: true} end

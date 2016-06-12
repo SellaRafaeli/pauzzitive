@@ -3,8 +3,12 @@
 # Links 
 - flow chart:
 https://dl.dropboxusercontent.com/u/10933856/Pauzz%20Messaging%20Bot%20Flow%20Chart%20%282%29.html
+
 - screens:
-https://www.justinmind.com/usernote/prototypes/12688639/20302630/20410969/index.html#/screens/d12245cc-1680-458d-89dd-4f0d7fb22724
+http://www.justinmind.com/usernote/token.action?token=THFTB1
+
+- alternative texts for states: 
+https://docs.google.com/document/d/1wWqrGFEOk60X4PO7bQ8m3Bq8dJBcsVOPRGc2lqUC7nI/edit
 
 # CSS Filewatcher:
 $ filewatcher '**/*.scss' 'scss $FILENAME > $FILENAME.css; echo "created"-$FILENAME; date'
@@ -16,3 +20,9 @@ $ filewatcher '**/*.scss' 'scss $FILENAME > $FILENAME.css; echo "created"-$FILEN
 - extract possible locations 
 - extract possible cravings
 - extract possible feelings   
+
+# FB links
+- FB app: https://developers.facebook.com/apps/1039831739439257/
+* callback URL: https://pauzzitive.herokuapp.com/webhook
+FB page: https://www.facebook.com/pauzzitive/?
+Chatbot docs: https://developers.facebook.com/docs/messenger-platform/implementation#setup
