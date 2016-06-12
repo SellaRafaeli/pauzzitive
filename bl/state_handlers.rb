@@ -68,7 +68,7 @@ def state_response(state, opts = {})
   when WHAT_EMOTION_EXPERIENCING
     "What feeling are you experiencing right now?"
   when EMOTIONS_INTENSITY
-    "On a scale from 1-10, how intense if that feeling?"
+    "On a scale from 1-10, how intense is that feeling?"
   when EMOTIONS_INTENSITY_REFLECTION
     "Sorry you're feeling that way.\nlet's find a better way to deal with it. Ready?"
   when CONNECTION_EMOTIONS_CRAVING
