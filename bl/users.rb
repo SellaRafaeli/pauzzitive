@@ -28,3 +28,14 @@ end
 def get_context 
   (context = ($users.get(@user_id) || {})['context'] || {}) rescue {}
 end
+
+# methods 
+def update_last_msg_time
+  prev_msg_time = get_user_attr('cur_msg_time') # temp <- cur_msg_time
+  set_user_attr('last_msg_time',prev_msg_time) if prev_msg_time # last_msg_time <- temp
+  set_user_attr('cur_msg_time',Time.now) # cur_msg_time <- now
+end
+
+def last_msg_time
+  get_user_attr('last_msg_time')
+end

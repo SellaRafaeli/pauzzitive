@@ -2,6 +2,7 @@
 def parse_msg
   data = fb_parse_msg_data(params)
   @user_id, @text = data[:user_id], data[:text].to_s
+  update_last_msg_time
 end
 
 # processing that is unrelated to current state, just by the input.
@@ -18,10 +19,12 @@ def process_pre_state
     respond('It is currently '+Time.now.strftime('%H:%M'))
   elsif t.in? 'restart', 'start'
     #send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
-    goto(START)    
-  elsif t.include_any? 'state'
+    goto(START)  
+  elsif t.in? 'state', 'info'
     user = $users.get(@user_id)
     respond(user.to_json)
+  elsif Time.now - last_msg_time > 1.day
+    goto(READY_TO_PAUZZ)
   end
 rescue => e
 end
