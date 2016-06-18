@@ -31,7 +31,7 @@ ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
-  location = get_context['guessed_location']
+  guessed_location = get_context['guessed_location']
   emotion  = get_context['emotion']
   craving  = get_context['craving'].to_s.downcase
   emotions_intensity_level = get_context[:emotions_intensity_level]
