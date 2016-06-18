@@ -36,7 +36,7 @@ def state_response(state, opts = {})
   craving  = get_context['craving'].to_s.downcase
   emotions_intensity_level = get_context[:emotions_intensity_level]
   craving_level            = get_context[:craving_level]
-  user_time = (Time.now + get_user_attr(:tz_offset).hours).strftime("%H:%M")
+  user_time = (Time.now + get_user_attr(:tz_offset).hours).strftime("%H:%M") rescue 'the middle of the day'
   case state
   when START  
     "Hi, I'm Pauzz, your Pauzzitive friend... \n\nI'm here to help you with your cravings.\n\nLet's get started.\n\n1.We'll Pauzz and surf that crave.\n2.We'll figure out your triggers.\n3.A Pauzzitive alternative will come your way.\n\nAre you ready?"
