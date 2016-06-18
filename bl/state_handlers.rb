@@ -31,7 +31,7 @@ ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
-  guessed_location = get_context['guessed_location']
+  guessed_location = get_context[:location]
   emotion  = get_context['emotion']
   craving  = get_context['craving'].to_s.downcase
   emotions_intensity_level = get_context[:emotions_intensity_level]
@@ -83,7 +83,7 @@ def state_response(state, opts = {})
   when CONNECTION_DIDNT_NOTICE
     "#{name}... I justed wanted to share that there is often a connection... don't you think?"
   when REFLECTION_AND_CHOICE
-    "It's now #{user_time}, you're #{guessed_location}, experiencing a bit of #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
+    "It's now #{user_time}, you're #{guessed_location}, feeling #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
   when GOODBYE_SUCCESS
     "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive..."
   when ACT_ON_CRAVING_MAYBE
@@ -110,7 +110,7 @@ end
 def whats_your_name
   profile   = get_user_profile(@user_id)  
   set_user_attr(:profile, profile)
-  set_user_attr(:tz_offset, profile['timezone'].to_i * -1)
+  set_user_attr(:tz_offset, profile['timezone'].to_i)
   set_user_attr(:name, @text)
   goto(READY_TO_PAUZZ)
 end
