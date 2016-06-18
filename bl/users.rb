@@ -26,7 +26,7 @@ def reset_context
 end
 
 def get_context 
-  (context = ($users.get(@user_id) || {})['context'] || {}) rescue {}
+  (context = ($users.get(@user_id) || {})['context'] || {}).hwia rescue {}
 end
 
 # methods 

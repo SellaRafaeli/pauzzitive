@@ -37,7 +37,6 @@ rescue => e
 end
 
 def process_msg
-  sleep(rand) if $prod #human-like delay 
   process_pre_state
   process_by_state
   goto(START) #if nothing else has registered
@@ -57,7 +56,7 @@ end
 def respond(text)
   user_state = get_state
   send_fb_text(@user_id, text) 
-  halt(200,{response: "#{text}", new_state:"#{user_state}"})
+  halt(200,{response: text, new_state:"#{user_state}", context: get_context})
 end 
 
 def handle_msg  

@@ -31,15 +31,17 @@ ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
-  location = get_context['location']
+  location = get_context['guessed_location']
   emotion  = get_context['emotion']
-  craving  = get_context['craving']
-
+  craving  = get_context['craving'].to_s.downcase
+  emotions_intensity_level = get_context[:emotions_intensity_level]
+  craving_level            = get_context[:craving_level]
+  user_time = (Time.now + get_user_attr(:tz_offset).hours).strftime("%H:%M")
   case state
   when START  
     "Hi, I'm Pauzz, your Pauzzitive friend... \n\nI'm here to help you with your cravings.\n\nLet's get started.\n\n1.We'll Pauzz and surf that crave.\n2.We'll figure out your triggers.\n3.A Pauzzitive alternative will come your way.\n\nAre you ready?"
   when WHATS_YOUR_NAME
-    "What's your name?"
+    "First, we'll get to know each other.\nWhat's your name?"
   when READY_TO_PAUZZ    
     "Alright #{name},\n\nTime to Pauzz that craving. Are you ready?"
   when GOODBYE_NO_PAUZZ
@@ -51,16 +53,16 @@ def state_response(state, opts = {})
       "Take 3 deep breaths\nInhale through the mouth\nExhale through the nose\nBreathing is the perfect Pauzz...\nDon't you think?",
       "Take a deep breath and count to 3\nHold your breath for 3 counts\nExhale for 3 counts\nFeels relaxing, right?",
       "Breathing is key\nBreathe in, breathe out\nLet's do this 10 times.\nFeels good, huh?",
-      "Just count to 10.\n1, 2, 3...\nNice and easy break, right?"
+      "Just count to 10.\n1,\n2,\n3,\n4,\nTake a deep breath...\n5,\n6,\n7,\n,8,\n9,\n10\n...\nNice and easy break, right?"
       ].sample
   when HIGH_FIVE
     "Awesome job!\nResisting temptation isn't easy, but you did it!\nGive yourself a high five!"
   when LOCATION
-    "Let's move on...\nWhere are you now? Home, work, or perhaps at some event?"
+    "Let's move on...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?"
   when WHAT_CRAVING_NOW
     "What are you craving this time?"
   when HOW_BAD_CRAVING
-    "On a scale of 1-10, how badly do you want that craving?"
+    "On a scale of 1-10, how badly do you want #{craving}?"
   when WANT_CRAVING_LOW
     "Got it... OK...\nYou can surf that craving!"
   when WANT_CRAVING_HIGH
@@ -72,11 +74,16 @@ def state_response(state, opts = {})
   when EMOTIONS_INTENSITY_REFLECTION
     "Sorry you're feeling that way.\nlet's find a better way to deal with it. Ready?"
   when CONNECTION_EMOTIONS_CRAVING
-    "Did you notice...\nthe connection between how badly you wanted your craving and the intensity of your emotion?"
+    if (emotions_intensity_level > 5 && craving_level > 5) ||
+       (emotions_intensity_level < 5 && craving_level < 5) 
+      "Did you notice...\nthe connection between how badly you wanted your craving and the intensity of your emotion?"
+    else
+      "Did you notice the gap between the intensity of your craving and your feelings?"
+    end
   when CONNECTION_DIDNT_NOTICE
     "#{name}... I justed wanted to share that there is often a connection... don't you think?"
   when REFLECTION_AND_CHOICE
-    "It's now #{Time.now}, you're at #{location}, experiencing #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
+    "It's now #{user_time}, you're #{guessed_location}, experiencing a bit of #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
   when GOODBYE_SUCCESS
     "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive..."
   when ACT_ON_CRAVING_MAYBE
@@ -101,11 +108,14 @@ def intro
 end
 
 def whats_your_name
+  profile   = get_user_profile(@user_id)  
+  set_user_attr(:profile, profile)
+  set_user_attr(:tz_offset, profile['timezone'].to_i * -1)
   set_user_attr(:name, @text)
   goto(READY_TO_PAUZZ)
 end
 
-def ready_to_pauzz
+def ready_to_pauzz  
   if @text == 'no'
     goto(GOODBYE_NO_PAUZZ) 
   else
@@ -117,8 +127,9 @@ def goodbye_no_pauzz()                   goto(START) end
 def pauzz_by_action()            goto(HIGH_FIVE) end
 def high_five()                  goto(LOCATION) end
 
+#http://localhost:9494/webhook?user_id=997788726969575&text=bla&state=location
 def location()           
-  set_context('location',@text)
+  set_context('location',guessed_location = guess_location(@text))
   goto(WHAT_CRAVING_NOW) 
 end
 
@@ -128,7 +139,9 @@ def what_craving_now()
 end
 
 def how_bad_craving
-  if (@text.to_i > 5)
+  craving_level = @text.to_i
+  set_context(:craving_level, craving_level)
+  if (craving_level > 5)
     goto(WANT_CRAVING_HIGH)
   else
     goto(WANT_CRAVING_LOW)
@@ -143,7 +156,11 @@ def what_emotion_experiencing
   goto(EMOTIONS_INTENSITY) 
 end
 
-def emotions_intensity()            goto(EMOTIONS_INTENSITY_REFLECTION) end
+def emotions_intensity
+  set_context('emotions_intensity_level',@text.to_i)
+  goto(EMOTIONS_INTENSITY_REFLECTION) 
+end
+
 def emotions_intensity_reflection() goto(CONNECTION_EMOTIONS_CRAVING) end
 
 def connection_emotions_craving() 

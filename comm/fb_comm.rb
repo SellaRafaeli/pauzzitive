@@ -22,6 +22,10 @@ def send_fb_msg(user_id, message_data)
   Bot.deliver(recipient: {id: user_id}, message: message_data ) if $prod
 end
 
+def get_user_profile(user_id)
+  http_get_json("https://graph.facebook.com/v2.6/#{user_id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{FB_PAGE_TOKEN}")
+end
+
 # send_fb_msg_options([ opt1, opt2])
 # each opt has title and url+type=web_url or payload+type=postback.
 def send_fb_buttons(user_id, msg, btns_arr) 
@@ -63,11 +67,10 @@ end
 def send_fb_text(user_id, text)
   texts = text.split("\n").select {|s| s.present? }
   texts.each {|t| 
-    sleep(rand) if $prod 
+    sleep(1) if $prod 
     send_fb_msg(user_id, {text: t})
   }  
 end
-
 
 ## get 
 def fb_parse_msg_data(data)
