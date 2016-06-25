@@ -50,15 +50,15 @@ def state_response(state, opts = {})
     [
       "Just yawn...\nWhen you yawn, your brain reboots just like you would reboot your computer...",
       "Let's stretch.\nLift your hands up high and stretch your body.\nDoesn't it feel great to take a little Pauzz?",
-      "Take 3 deep breaths\nInhale through the mouth\nExhale through the nose\nBreathing is the perfect Pauzz...\nDon't you think?",
-      "Take a deep breath and count to 3\nHold your breath for 3 counts\nExhale for 3 counts\nFeels relaxing, right?",
+      "Take 3 deep breaths\n...\nInhale through the mouth...\n...\n...\nExhale through the nose\n...\n...\n...\nBreathing is the perfect Pauzz...\nDon't you think?",
+      "Take a deep breath and count to 3\n...\n...\n...\nHold your breath for 3 counts\n...\n...\n...\nExhale for 3 counts\n...\n...\n...\nFeels relaxing, right?",
       "Breathing is key\nBreathe in, breathe out\nLet's do this 10 times.\nFeels good, huh?",
       "Just count to 10.\n1,\n2,\n3,\n4,\nTake a deep breath...\n5,\n6,\n7,\n,8,\n9,\n10\n...\nNice and easy break, right?"
       ].sample
   when HIGH_FIVE
     "Awesome job!\nResisting temptation isn't easy, but you did it!\nGive yourself a high five!"
   when LOCATION
-    "Let's move on...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?"
+    "Let's continue...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?"
   when WHAT_CRAVING_NOW
     "What are you craving this time?"
   when HOW_BAD_CRAVING
@@ -116,7 +116,7 @@ def whats_your_name
 end
 
 def ready_to_pauzz  
-  if @text == 'no'
+  if said_no
     goto(GOODBYE_NO_PAUZZ) 
   else
     goto(PAUZZ_BY_ACTION)
@@ -133,8 +133,8 @@ def location()
   goto(WHAT_CRAVING_NOW) 
 end
 
-def what_craving_now()           
-  set_context('craving',@text)
+def what_craving_now()
+  set_context('craving', guessed_craving = guess_craving(@text))
   goto(HOW_BAD_CRAVING) 
 end
 
@@ -164,7 +164,7 @@ end
 def emotions_intensity_reflection() goto(CONNECTION_EMOTIONS_CRAVING) end
 
 def connection_emotions_craving() 
-  if (@text == 'no') 
+  if said_no
     goto(CONNECTION_DIDNT_NOTICE)
   else 
     goto(REFLECTION_AND_CHOICE)
@@ -174,9 +174,9 @@ end
 def connection_didnt_notice() goto(REFLECTION_AND_CHOICE) end
 
 def reflection_and_choice
-  if (@text == 'no') 
+  if said_no
     goto(GOODBYE_SUCCESS)
-  elsif (@text == 'maybe') 
+  elsif said_maybe
     goto(ACT_ON_CRAVING_MAYBE)
   else #yes
     goto(ACT_ON_CRAVING_YES)

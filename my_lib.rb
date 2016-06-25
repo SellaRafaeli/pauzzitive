@@ -31,7 +31,7 @@ end
 
 class String
   def include_any?(*strings)
-    Array(strings).any? {|str| self.include?(str) }
+    Array(strings).any? {|str| self.downcase.include?(str.downcase) }
   end
 end
 
