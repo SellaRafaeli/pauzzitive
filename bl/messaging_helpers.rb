@@ -69,18 +69,18 @@ def guess_craving(text)
 
   return :pizza if text.include_any?('pizza')
 
-  return :donuts if text.inlude_any?('donut','cinammon roll')
+  return :donuts if text.include_any?('donut','cinammon roll')
 
   return :craving
   #NO category: Word 1 Nachos, Word 1 Chili, Word1 Burrito Word 1 Churros, Word 1 Pop Tarts, Word 1 Sugar, Word 1 Tacos Word 1 Marshmallows, Word 1 Cheese sticks Word 1 Popcorn Word 1 Onion rings
 end
 
 def said_no
-  @text.downcase.inlude_any?('no')
+  @text.downcase.include_any?('no')
 end
 
 def said_maybe
-  @text.downcase.inlude_any?('maybe','perhaps','guess')
+  @text.downcase.include_any?('maybe','perhaps','guess')
 end
 
 get '/messaging_helpers_refresh' do true end
