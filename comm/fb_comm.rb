@@ -66,9 +66,9 @@ end
 
 def send_fb_text(user_id, text)
   texts = text.split("\n").select {|s| s.present? }
-  texts.each {|t| 
-    sleep(2) if $prod 
+  texts.each {|t|     
     send_fb_msg(user_id, {text: t})
+    sleep(2) if $prod 
   }  
 end
 
