@@ -62,7 +62,7 @@ def state_response(state, opts = {})
   when WHAT_CRAVING_NOW
     "What are you craving this time?"
   when HOW_BAD_CRAVING
-    "On a scale of 1-10, how badly do you want #{craving}?"
+    "On a scale of 1-10, how badly do you want the #{craving}?"
   when WANT_CRAVING_LOW
     "Got it... OK...\nYou can surf that craving!"
   when WANT_CRAVING_HIGH
