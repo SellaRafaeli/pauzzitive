@@ -5,6 +5,8 @@ FB_PAGE_ID    = 492664237595026
 FB_MSGING_ROUTE      = 'https://graph.facebook.com/v2.6/me/messages'
 FB_PAGE_ROUTE        = "https://graph.facebook.com/v2.6/#{FB_PAGE_ID}/thread_settings?access_token=#{FB_PAGE_TOKEN}"
 SELLA_USER_ID = '997788726969575'
+LIMOR_USER_ID = '1189379634428114'
+NAOMI_USER_ID = '1213491222016960'
 
 include Facebook::Messenger #https://github.com/hyperoslo/facebook-messenger
 Facebook::Messenger.config.access_token = FB_PAGE_TOKEN
