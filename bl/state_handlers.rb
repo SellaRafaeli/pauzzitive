@@ -83,7 +83,8 @@ def state_response(state, opts = {})
   when CONNECTION_DIDNT_NOTICE
     "#{name}... I justed wanted to share that there is often a connection... don't you think?"
   when REFLECTION_AND_CHOICE
-    "It's now #{user_time}, you're #{guessed_location}, feeling #{emotion}, and you have a craving for #{craving}. Are you going to eat it?"
+    emotion_msg = emotion ? " feeling #{emotion}," : ""    
+    "It's now #{user_time}, you're #{guessed_location},#{emotion_msg} and you have a craving for #{craving}. Are you going to eat it?"
   when GOODBYE_SUCCESS
     "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive..."
   when ACT_ON_CRAVING_MAYBE
@@ -152,7 +153,7 @@ def want_craving_low ()             goto(WHAT_EMOTION_EXPERIENCING) end
 def want_craving_high()             goto(WHAT_EMOTION_EXPERIENCING) end
 
 def what_emotion_experiencing
-  set_context('emotion',@text)
+  set_context('emotion', guessed_emotion = guess_emotion(@text))
   goto(EMOTIONS_INTENSITY) 
 end
 

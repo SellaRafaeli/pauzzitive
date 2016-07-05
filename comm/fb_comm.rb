@@ -23,7 +23,7 @@ def send_fb_msg(user_id, message_data)
 end
 
 def get_user_profile(user_id)
-  http_get_json("https://graph.facebook.com/v2.6/#{user_id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{FB_PAGE_TOKEN}")
+  http_get_json("https://graph.facebook.com/v2.6/#{user_id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{FB_PAGE_TOKEN}") rescue {}
 end
 
 # send_fb_msg_options([ opt1, opt2])

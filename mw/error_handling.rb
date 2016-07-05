@@ -2,9 +2,11 @@ $errors = $mongo.collection('errors')
 
 module Helpers
   def log_e(err, data = {})  
-    err = {msg: err.to_s, backtrace: err.backtrace.to_a.slice(0,4)} if err.is_a? Exception
+    backtrace= err.backtrace.to_a.slice(0,3)
+    err = {msg: err.to_s, backtrace: backtrace} if err.is_a? Exception
     err = {} unless err.is_a? Hash
     puts err[:msg].to_s.red
+    puts backtrace.to_s.yellow
     err[:user_id]  = cuid
     err[:path]     = request_path
     err[:params]   = JSON.parse(_params.to_json) #sometimes params has un-BSON able fields
