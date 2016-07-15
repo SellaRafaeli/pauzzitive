@@ -18,7 +18,6 @@ def process_pre_state
   elsif t.include? "time"
     respond('It is currently '+Time.now.strftime('%H:%M'))
   elsif t.in? 'restart', 'start'
-    #send_fb_text(@user_id, 'OK, let\'s start at the beginning.')
     goto(START)  
   elsif t.in? 'state', 'info'
     user = $users.get(@user_id)
@@ -55,7 +54,8 @@ end
 
 def respond(text)
   user_state = get_state
-  send_fb_text(@user_id, text) 
+  data = {user_id: @user_id, text: text}
+  do_bg(:send_fb_text,data) 
   halt(200,{response: text, new_state:"#{user_state}", context: get_context})
 end 
 

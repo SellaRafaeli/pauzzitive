@@ -1,6 +1,7 @@
 # STATES
 
 INTRO = :INTRO 
+START = INTRO
 WHATS_YOUR_NAME = :WHATS_YOUR_NAME
 READY_TO_PAUZZ = :READY_TO_PAUZZ 
 GOODBYE_NO_PAUZZ = :GOODBYE_NO_PAUZZ 
@@ -18,8 +19,6 @@ CONNECTION_EMOTIONS_CRAVING = :CONNECTION_EMOTIONS_CRAVING
 #CONNECTION_NOTICED = :CONNECTION_NOTICED 
 CONNECTION_DIDNT_NOTICE = :CONNECTION_DIDNT_NOTICE 
 REFLECTION_AND_CHOICE = :REFLECTION_AND_CHOICE
-START = INTRO
-
 GOODBYE_SUCCESS = :GOODBYE_SUCCESS # successfully avoided craving 
 ACT_ON_CRAVING_MAYBE  = :ACT_ON_CRAVING_MAYBE
 ACT_ON_CRAVING_YES = :ACT_ON_CRAVING_YES
@@ -39,11 +38,50 @@ def state_response(state, opts = {})
   user_time = (Time.now + get_user_attr(:tz_offset).hours).strftime("%H:%M") rescue 'the middle of the day'
   case state
   when START  
-    "Hi, I'm Pauzz, your Pauzzitive friend... \n\nI'm here to help you with your cravings.\n\nLet's get started.\n\n1.We'll Pauzz and surf that crave.\n2.We'll figure out your triggers.\n3.A Pauzzitive alternative will come your way.\n\nAre you ready?"
+    [
+      "Hi, I'm Pauzz, your Pauzzitive friend... \n\n",
+      "Hey there! I'm Pauzz, I'll be your Pauzzitive friend. ;) \n\n",
+      "Hi! I'll be your Pauzzitive friend. You can call me Pauzz.\n\n",
+      "Hello. My name is Pauzz.\n\n"
+    ].sample + 
+    [
+      "I'm here to help you with your cravings.\n\n",
+      "I can help you with your cravings.\n\n",
+      "I'd like to help you with your cravings.\n\n",
+      "I am here to help with cravings! :)\n\n"
+    ].sample + 
+    [
+      "Let's get started.\n\n",
+      "Leet's start.\n\n"
+    ].sample +       
+    [
+      "1.We'll Pauzz and surf that crave.\n",
+      "1.We'll 'Pauzz' the craving.\n",
+    ].sample + 
+    [
+      "2.We'll figure out your triggers.\n",
+      "2.We'll understand what your triggers are.\n"
+    ].sample + 
+    [
+      "3.A Pauzzitive alternative will come your way.\n\n",
+      "3.We'll send you some Pauzzitive alternative.\n\n"
+    ].sample + 
+    "Are you ready?"
   when WHATS_YOUR_NAME
-    "First, we'll get to know each other.\nWhat's your name?"
+    [
+      "First, we'll get to know each other.\nWhat's your name?",
+      "First let's get acquainted. ;) How should I call you?",
+      "First of all - nice to meet you. What is your name?",
+      "First thing's first - what's your name? :)",
+      "First thing... how should I call you?"
+    ].sample
   when READY_TO_PAUZZ    
-    "Alright #{name},\n\nTime to Pauzz that craving. Are you ready?"
+    [
+      "Alright #{name},\n\nTime to Pauzz that craving. Are you ready?",
+      "OK #{name}...\n\nTime to PAUZZ your craving. Ready?",
+      "Nice to meet you, #{name}. Are you ready to Pauzz your craving?",
+      "Well #{name} - nice to make your acquaintance. Shall we proceed to Pauzzing your craving? :)"
+    ].sample
   when GOODBYE_NO_PAUZZ
     "OK! Perhaps another time....\n\n See you next time you're craving hits.\n\nLater..."
   when PAUZZ_BY_ACTION
@@ -56,45 +94,128 @@ def state_response(state, opts = {})
       "Just count to 10.\n1,\n2,\n3,\n4,\nTake a deep breath...\n5,\n6,\n7,\n,8,\n9,\n10\n...\nNice and easy break, right?"
       ].sample
   when HIGH_FIVE
-    "Awesome job!\nResisting temptation isn't easy, but you did it!\nGive yourself a high five!"
+    [
+      "Awesome job!\nResisting temptation isn't easy, but you did it!\nGive yourself a high five!",
+      "Good job!\bIt isn't easy to resist temptation. But you did it!\nGood job!",
+      "I'm proud of you. You resisted the temptation!",
+      "Congrats! That was great - you did not give in to temptation!"
+    ].sample
   when LOCATION
-    "Let's continue...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?"
+    ["Let's continue...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?",
+      "So, where are you now? At a restaurant, some event? Perhaps at home or at work?",
+      "Tell me where you are - at home or at a restaurant or at an event?\n Or perhaps at work?",
+      "Where are you right now? I wonder if you're at work or at an event. Or perhaps at home. Or just out..?"
+      ].sample
   when WHAT_CRAVING_NOW
-    "What are you craving this time?"
+    [
+      "What are you craving this time?",
+      "What's your craving?",
+      "What are you feeling like right now?\n What are you craving?",
+      "What do you feel like you're craving right now?"
+    ].sample
   when HOW_BAD_CRAVING
-    "On a scale of 1-10, how badly do you want the #{craving}?"
+    [
+      "On a scale of 1-10, how badly do you want the #{craving}?",
+      "How bad do you want the #{craving}? From 1-10.",
+      "From 1-10, how much are you craving the #{craving}?",
+      "How bad do you feel like having the #{craving}?\nSay from 1 (the least) to 10 (the most)."
+    ].sample
   when WANT_CRAVING_LOW
-    "Got it... OK...\nYou can surf that craving!"
+    [
+      "Got it... OK...\nYou can surf that craving!",
+      "I see. Well, you can handle that.",
+      "Ah OK. You can manage it!",
+      "Well, you can beat that!"
+    ].sample
   when WANT_CRAVING_HIGH
-    "OK!\nWe've all been there, it's alright.\nLet's show that craving who's the boss."  
+    [
+      "OK!\nWe've all been there, it's alright.\nLet's show that craving who's the boss.",
+      "Well, I know what you mean.\n You can manage it though!",
+      "That's hard. But you can do it!",
+      "That's a lot, huh? But I know we can survive this craving!"
+    ].sample
   when WHAT_EMOTION_EXPERIENCING
-    "What feeling are you experiencing right now?"
+    [
+      "What feeling are you experiencing right now?",
+      "How are you feeling right now?",
+      "How would you describe your feeling at this moment?",
+      "What emotion are you experiencing right now?"
+    ].sample
   when EMOTIONS_INTENSITY
-    "On a scale from 1-10, how intense is that feeling?"
+    [
+      "On a scale from 1-10, how intense is that feeling?",
+      "How strong is that feeling? From 1-10?",
+      "Is the feeling intense or weak? From 1-10.",
+      "From 1-10, how would you describe the intensity of that feeling?"
+    ].sample
   when EMOTIONS_INTENSITY_REFLECTION
-    "Sorry you're feeling that way.\nlet's find a better way to deal with it. Ready?"
+    [
+      "Sorry you're feeling that way.\nlet's find a better way to deal with it. Ready?",
+      "That's too bad. Are you ready to try to find a better way to deal with it?",
+      "I'm sorry you feel that way...\nLet's look for a better way to handle it. OK?",
+      "I'm sorry to hear that.\nLet's find an alternative way to handle it. Ready?"
+    ].sample
   when CONNECTION_EMOTIONS_CRAVING
     if (emotions_intensity_level > 5 && craving_level > 5) ||
        (emotions_intensity_level < 5 && craving_level < 5) 
-      "Did you notice...\nthe connection between how badly you wanted your craving and the intensity of your emotion?"
+      [
+        "Did you notice...\nthe connection between how badly you wanted your craving and the intensity of your emotion?",
+        "It seems there is a connection between the intensity of your craving and the intensity of your emotion. Did you notice that?",
+        "Hmm, looks like the intensity of the emotion you're experiencing and the the craving are related. Wouldn't you say?",
+        "The level of the emotion and the level of the craving seem to be related. Did you notice that?"
+      ].sample
     else
-      "Did you notice the gap between the intensity of your craving and your feelings?"
+      [
+        "Did you notice the gap between the intensity of your craving and your feelings?",
+        "There seems to be a gap between the intensity of your craving and your feelings, right?",
+        "Did you notice the difference between your craving intensity and your feelings?",
+        "That's quite a difference between the intensity of your emotion and the craving, isn't it?"
+      ].sample
     end
   when CONNECTION_DIDNT_NOTICE
-    "#{name}... I justed wanted to share that there is often a connection... don't you think?"
+    [
+      "#{name}... I justed wanted to share that there is often a connection... don't you think?",
+      "Well, I thought there is a connection. Maybe next time you will notice. :)",
+      "Well #{name}, it's worth thinking about it - I think there is a connection.",
+      "Just thought I'd share - often there seems like there is a connection..."
+    ].sample
   when REFLECTION_AND_CHOICE
     emotion_msg = emotion ? " feeling #{emotion}," : ""    
-    "It's now #{user_time}, you're #{guessed_location},#{emotion_msg} and you have a craving for #{craving}. Are you going to eat it?"
+    [
+      "It's now #{user_time}, you're #{guessed_location},#{emotion_msg} and you have a craving for #{craving}. Are you going to eat it?",
+      "The time is #{user_time} and you're #{emotion_msg} #{guess_location} - feeling a craving for #{craving}. Are you going to eat it?",
+      "Let's take a look at ourselves - you're #{emotion_msg} #{guess_location}, craving #{craving}, and it's #{user_time}. Are you going to eat it...?"
+    ].sample
   when GOODBYE_SUCCESS
-    "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive..."
+    [
+      "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive...",
+      "Good job Pauzzing!\nSuccess!\n Enjoy being 'Pauzzitive'... ;)",
+      "Nice going.\nEnjoy your 'pauzzitive' state.",
+      "Good! Great!\nNow you are 'pauzzitive!"
+    ].sample
   when ACT_ON_CRAVING_MAYBE
     "To eat or not to eat...?\nTry to think what you would tell your best friend in this situation.\nIt is sometimes easier to give the perfect advice to a friend.\nAre you ready for your Pauzzitive alternative?"
   when ACT_ON_CRAVING_YES
-    "OK then... before we say goodbye,\nI'm going to ask you one last question...\nHow are you going to feel in an hour if you act on your craving?"
+    [
+      "OK then... before we say goodbye,\nI'm going to ask you one last question...\nHow are you going to feel in an hour if you act on your craving?",
+      "Well...\nhow are you going to feel later if you do follow your craving right now?",
+      "Let me just ask you -\nHow will you feel later?\nIf you act on your craving, that is.",
+      "Perhaps it's worth just thinking -\nHow are you going to feel later, if you follow your craving?"
+    ].sample
   when ACT_ON_CRAVING_FEELING_BAD
-    'Sorry to hear that. Wanna try a Pauzzitive alternative?'
+    [
+      'Sorry to hear that. Wanna try a Pauzzitive alternative?',
+      "Oh, I'm sorry.\nHow about some Pauzzitive alternative?",
+      "Eh, that's too bad. How about an alternative that's a bit more 'pauzzitive'?",
+      "Mmm... sorry to hear. How about an alternative? Some a bit more pauzzitive?"
+    ].sample
   when GOODBYE_FAILURE 
-    "Well, honesty is important.\nAnd you did a great job pauzzing back there!\nRemember, I'm always here when you want to Pauzz your craving. See you next time!"
+    [
+      "Well, honesty is important.\nAnd you did a great job pauzzing back there!\nRemember, I'm always here when you want to Pauzz your craving. See you next time!",
+      "Well I appreciate the honesty.\nRemember I'm here for you next time.\nGood luck!",
+      "Well at least you managed to Pauzz earlier.\nRemember to chec in with me nex time you need me!\n",
+      "But you did such a great job of pauzzing earlier!\nWell, perhaps next time.\nAnytime you have a craving - I'm here for you.\nSee you next time! :)"
+    ].sample
   when ALTERNATIVE_ACTION_MENU
     "Go do something alternative! We\'re done here, go back to start."
   else 

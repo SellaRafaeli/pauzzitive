@@ -66,8 +66,10 @@ def send_fb_text_old(user_id, text)
   send_fb_msg(user_id, {text: text})
 end
 
-def send_fb_text(user_id, text)
-  texts = text.split("\n").select {|s| s.present? }
+def send_fb_text(data)
+  user_id = data[:user_id]
+  text    = data[:text]
+  texts   = text.split("\n").select {|s| s.present? }
   texts.each {|t|     
     send_fb_msg(user_id, {text: t})
     #sleep(2) if $prod 
@@ -110,7 +112,7 @@ EXAMPLE_FB_PAYLOAD = {
 }
 
 def test_fb_text
-  send_fb_text(SELLA_USER_ID, 'hello world 3')
+  send_fb_text({user_id: SELLA_USER_ID, text: 'hello world 3'})
 end
 
 def test_fb_buttons
