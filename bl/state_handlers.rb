@@ -102,9 +102,9 @@ def state_response(state, opts = {})
     ].sample
   when LOCATION
     ["Let's continue...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?",
-      "So, where are you now? At a restaurant, some event? Perhaps at home or at work?",
+      "So, where are you now?\nAt a restaurant, some event? Perhaps at home or at work?",
       "Tell me where you are - at home or at a restaurant or at an event?\n Or perhaps at work?",
-      "Where are you right now? I wonder if you're at work or at an event. Or perhaps at home. Or just out..?"
+      "Where are you right now?\nI wonder if you're at work or at an event. Or perhaps at home. Or just out..?"
       ].sample
   when WHAT_CRAVING_NOW
     [
