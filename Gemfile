@@ -26,6 +26,7 @@ gem 'literate_randomizer'
 gem 'faker'
 gem 'bcrypt'
 gem 'facebook-messenger'
+gem "bunny",              ">= 1.7.0" # rabbit
 #gem 'base62' #allows compression of mongo ids
 
 group :development, :test do
