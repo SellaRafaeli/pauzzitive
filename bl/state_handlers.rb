@@ -183,8 +183,8 @@ def state_response(state, opts = {})
     emotion_msg = emotion ? " feeling #{emotion}," : ""    
     [
       "It's now #{user_time}, you're #{guessed_location},#{emotion_msg} and you have a craving for #{craving}. Are you going to eat it?",
-      "The time is #{user_time} and you're #{emotion_msg} #{guess_location} - feeling a craving for #{craving}. Are you going to eat it?",
-      "Let's take a look at ourselves - you're #{emotion_msg} #{guess_location}, craving #{craving}, and it's #{user_time}. Are you going to eat it...?"
+      "The time is #{user_time} and you're #{emotion_msg} #{guessed_location} - feeling a craving for #{craving}. Are you going to eat it?",
+      "Let's take a look at ourselves - you're #{emotion_msg} #{guessed_location}, craving #{craving}, and it's #{user_time}. Are you going to eat it...?"
     ].sample
   when GOODBYE_SUCCESS
     [

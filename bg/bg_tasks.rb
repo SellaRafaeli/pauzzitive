@@ -9,6 +9,8 @@ end
 def do_bg(method, data)
   payload = data.merge(method_name: method)
   $do_async ? send_bg_event(payload) : do_direct(payload)
+rescue => e
+  do_direct(payload)
 end
 
 def rabbit_channel
