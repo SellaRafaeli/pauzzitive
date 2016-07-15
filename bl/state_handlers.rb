@@ -52,7 +52,7 @@ def state_response(state, opts = {})
     ].sample + 
     [
       "Let's get started.\n\n",
-      "Leet's start.\n\n"
+      "Let's start.\n\n"
     ].sample +       
     [
       "1.We'll Pauzz and surf that crave.\n",
@@ -96,9 +96,9 @@ def state_response(state, opts = {})
   when HIGH_FIVE
     [
       "Awesome job!\nResisting temptation isn't easy, but you did it!\nGive yourself a high five!",
-      "Good job!\bIt isn't easy to resist temptation. But you did it!\nGood job!",
-      "I'm proud of you. You resisted the temptation!",
-      "Congrats! That was great - you did not give in to temptation!"
+      "Good job!\bIt isn't easy to resist temptation. But you did it!\nGood job! Give me a high five or thumbs up!",
+      "I'm proud of you. You resisted the temptation! Give me a high five (or a thumbs up ;) )..",
+      "Congrats! That was great - you did not give in to temptation! High five!"
     ].sample
   when LOCATION
     ["Let's continue...\nWhere are you now? Home, work, a restaurant?\nOr perhaps at some event, or just out and about?",
