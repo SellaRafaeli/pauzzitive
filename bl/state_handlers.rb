@@ -436,11 +436,11 @@ def creative_goodbye
 end
 
 def get_moving1
-  said_no ? goto STRETCH_ARMS : goto JUMPING_JACKS 
+  said_no ? goto(STRETCH_ARMS) : goto(JUMPING_JACKS) 
 end
 
 def get_moving2
-  said_no ? goto BUTT_CLENCH : WALK_100_STEPS
+  said_no ? goto(BUTT_CLENCH) : goto(WALK_100_STEPS)
 end
 
 def stretch_arms() goto(WHAT_CRAVING_NOW) end
