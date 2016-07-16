@@ -37,6 +37,15 @@ MINDFUL_GOODBYE     = :MINDFUL_GOODBYE
 BE_CREATIVE      = :BE_CREATIVE
 CREATIVE_GOODBYE = :CREATIVE_GOODBYE
 
+# get moving 
+GET_MOVING1   = :GET_MOVING1
+GET_MOVING2   = :GET_MOVING2
+STRETCH_ARMS  = :STRETCH_ARMS
+JUMPING_JACKS = :JUMPING_JACKS
+BUTT_CLENCH   = :BUTT_CLENCH
+WALK_100_STEPS= :WALK_100_STEPS
+
+
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
@@ -257,6 +266,29 @@ def state_response(state, opts = {})
     [
       "You're lucky, aren't you?\nAren't you glad you Pauzzed?\nI am always here to help you Pauzz.\nSee you next time! Writ me anything next time you are craving something."
     ].sample
+  when GET_MOVING1
+    [
+      "Let's get moving to feel great!\nCan you do some jumping jacks?"
+      ].sample 
+  when GET_MOVING2
+    [
+      "Let's get moving! Can you walk 100 steps?"
+      ].sample
+  when STRETCH_ARMS
+    [
+      "OK! Let's try something different.\nJust stretch your arms behind your back...\nL-O-N-G stretch for 5 seconds...\ngive me a thumbs up when you're done.:)"
+    ].sample
+  when JUMPING_JACKS
+    [ "Great! Let's get to it.\nGive me 20 jumping jacks!:)\n1, 2, 3...\n...\nGive me a thumbs up when you're done. ;)"
+    ].sample
+  when BUTT_CLENCH
+    [
+      "OK then..\nJust flex those 'buns' ;)...\nFlex and relax your butt muscles 10-15 times.\nLet's count: 1, 2, 3...\n...\nGive me a thumbs up when you're done. ;)"
+      ].sample
+  when WALK_100_STEPS
+    [
+      "Let's get moving then!\nJust walk 100 steps...\nand walk that craving off!\nGive me a thumbs up when you're done. :)"
+      ].sample
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -372,7 +404,7 @@ def alternative_action_menu
   if text.include?("min")
     choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample    
   elsif text.include?('get') || text.include?('mov') 
-    choice = [GET_MOVING]
+    choice = [GET_MOVING1, GET_MOVING2].sample
   else
     choice = [BE_CREATIVE]
   end
@@ -403,6 +435,18 @@ def creative_goodbye
   goto(WHAT_CRAVING_NOW)
 end
 
-# goto(WHAT_CRAVING_NOW)
+def get_moving1
+  said_no ? goto STRETCH_ARMS : goto JUMPING_JACKS 
+end
+
+def get_moving2
+  said_no ? goto BUTT_CLENCH : WALK_100_STEPS
+end
+
+def stretch_arms() goto(WHAT_CRAVING_NOW) end
+def jumping_jacks() goto(WHAT_CRAVING_NOW) end
+def butt_clench() goto(WHAT_CRAVING_NOW) end
+def walk_100_steps() goto(WHAT_CRAVING_NOW) end
+# 
 
 get '/bla' do {refresh: true} end

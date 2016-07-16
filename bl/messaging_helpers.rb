@@ -93,7 +93,7 @@ def guess_emotion(text)
 end
 
 def said_no
-  @text.downcase.include_any?('no')
+  @text.downcase.include_any?('no','nah','negat')
 end
 
 def said_maybe
