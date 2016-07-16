@@ -44,7 +44,7 @@ STRETCH_ARMS  = :STRETCH_ARMS
 JUMPING_JACKS = :JUMPING_JACKS
 BUTT_CLENCH   = :BUTT_CLENCH
 WALK_100_STEPS= :WALK_100_STEPS
-
+GET_MOVING_GOODBYE = :GET_MOVING_GOODBYE
 
 #response upon ENTERING state
 def state_response(state, opts = {})
@@ -289,6 +289,10 @@ def state_response(state, opts = {})
     [
       "Let's get moving then!\nJust walk 100 steps...\nand walk that craving off!\nGive me a thumbs up when you're done. :)"
       ].sample
+  when GET_MOVING_GOODBYE
+    [
+      "Feeling good?\nPauzzing for a few moments is always the beginning of something good.\nGlad I was hear to assist!\nBye for now!\nType anything the next time you have a craving, to summon me. :)"
+    ].sample
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -443,10 +447,12 @@ def get_moving2
   said_no ? goto(BUTT_CLENCH) : goto(WALK_100_STEPS)
 end
 
-def stretch_arms() goto(WHAT_CRAVING_NOW) end
-def jumping_jacks() goto(WHAT_CRAVING_NOW) end
-def butt_clench() goto(WHAT_CRAVING_NOW) end
-def walk_100_steps() goto(WHAT_CRAVING_NOW) end
+def stretch_arms()   goto(GET_MOVING_GOODBYE) end
+def jumping_jacks()  goto(GET_MOVING_GOODBYE) end
+def butt_clench()    goto(GET_MOVING_GOODBYE) end
+def walk_100_steps() goto(GET_MOVING_GOODBYE) end
+
+def get_moving_goodbye() goto(WHAT_CRAVING_NOW) end
 # 
 
 get '/bla' do {refresh: true} end
