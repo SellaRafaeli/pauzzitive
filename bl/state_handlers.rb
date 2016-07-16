@@ -27,6 +27,11 @@ ACT_ON_CRAVING_FEELING_BAD = :ACT_ON_CRAVING_FEELING_BAD
 
 ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 
+MANTRA              = :MANTRA
+MINDFUL_STATEMENT   = :MINDFUL_STATEMENT
+INSPIRATIONAL_QUOTE = :INSPIRATIONAL_QUOTE
+MINDFUL_GOODBYE     = :MINDFUL_GOODBYE
+
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
@@ -236,8 +241,6 @@ def state_response(state, opts = {})
     [
       "Take a moment to get inspired:\n'The challenge is not to be perfect, it\'s to be whole.' - Jane Fonda.\nInspiring, right?"  
     ].sample
-  end
-  end
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -354,7 +357,7 @@ def alternative_action_menu
     choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample
     goto(choice) 
   else
-    goto(PLAYFUL_ALTERNATIVE) 
+#    goto(PLAYFUL_ALTERNATIVE) 
   end
 end
 
