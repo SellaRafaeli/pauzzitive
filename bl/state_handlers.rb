@@ -27,10 +27,15 @@ ACT_ON_CRAVING_FEELING_BAD = :ACT_ON_CRAVING_FEELING_BAD
 
 ALTERNATIVE_ACTION_MENU = :ALTERNATIVE_ACTION_MENU
 
+# mindful
 MANTRA              = :MANTRA
 MINDFUL_STATEMENT   = :MINDFUL_STATEMENT
 INSPIRATIONAL_QUOTE = :INSPIRATIONAL_QUOTE
 MINDFUL_GOODBYE     = :MINDFUL_GOODBYE
+
+# creative
+BE_CREATIVE      = :BE_CREATIVE
+CREATIVE_GOODBYE = :CREATIVE_GOODBYE
 
 #response upon ENTERING state
 def state_response(state, opts = {})
@@ -235,11 +240,22 @@ def state_response(state, opts = {})
     ].sample
   when MINDFUL_STATEMENT
     [
-      "Please say out loud:\n'May I be happy, May I be healthy,\nMay I be safe, May I live my life with ease.\nTry repeating this mantra thinking about someone you care about. Give me a thumbs up to continue?"
+      "Please say out loud:\n'May I be happy, May I be healthy,\nMay I be safe, May I live my life with ease.'\nTry repeating this mantra thinking about someone you care about. Give me a thumbs up to continue?"
     ].sample
   when INSPIRATIONAL_QUOTE
     [
-      "Take a moment to get inspired:\n'The challenge is not to be perfect, it\'s to be whole.' - Jane Fonda.\nInspiring, right?"  
+      "Take a moment to get inspired:\n'The challenge is not to be perfect, it\'s to be whole.' - Jane Fonda.\nThat's inspiring stuff."  
+    ].sample
+  when BE_CREATIVE
+    [
+      "Write me something you're grateful for in your life.",
+      "Write me something good that happened to you today.",
+      "Write me one of your best qualities."
+    ].sample
+
+  when CREATIVE_GOODBYE
+    [
+      "You're lucky, aren't you?\nAren't you glad you Pauzzed?\nI am always here to help you Pauzz.\nSee you next time! Writ me anything next time you are craving something."
     ].sample
   else 
     "missing text for state: #{state.to_s}"
@@ -353,12 +369,14 @@ end
 
 def alternative_action_menu
   text = @text.downcase
-  if true # text.include?("min")
-    choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample
-    goto(choice) 
+  if text.include?("min")
+    choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample    
+  elsif text.include?('get') || text.include?('mov') 
+    choice = [GET_MOVING]
   else
-#    goto(PLAYFUL_ALTERNATIVE) 
+    choice = [BE_CREATIVE]
   end
+  goto(choice) 
 end
 
 def mantra
@@ -375,6 +393,14 @@ end
 
 def inspirational_quote
   goto(MINDFUL_GOODBYE)
+end
+
+def be_creative
+  goto(CREATIVE_GOODBYE)
+end
+
+def creative_goodbye
+  goto(WHAT_CRAVING_NOW)
 end
 
 # goto(WHAT_CRAVING_NOW)
