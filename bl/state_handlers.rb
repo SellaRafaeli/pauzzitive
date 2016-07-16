@@ -291,7 +291,7 @@ def state_response(state, opts = {})
       ].sample
   when GET_MOVING_GOODBYE
     [
-      "Feeling good?\nPauzzing for a few moments is always the beginning of something good.\nGlad I was hear to assist!\nBye for now!\nType anything the next time you have a craving, to summon me. :)"
+      "Feeling good?\nPauzzing for a few moments is always the beginning of something good.\nGlad I was here to assist!\nBye for now!\nType anything the next time you have a craving, to summon me. :)"
     ].sample
   else 
     "missing text for state: #{state.to_s}"
