@@ -108,7 +108,7 @@ def state_response(state, opts = {})
       ].sample
   when WHAT_CRAVING_NOW
     [
-      "What are you craving this time?",
+      "What are you craving right now?",
       "What's your craving?",
       "What are you feeling like right now?\n What are you craving?",
       "What do you feel like you're craving right now?"
@@ -217,7 +217,27 @@ def state_response(state, opts = {})
       "But you did such a great job of pauzzing earlier!\nWell, perhaps next time.\nAnytime you have a craving - I'm here for you.\nSee you next time! :)"
     ].sample
   when ALTERNATIVE_ACTION_MENU
-    "Go do something alternative! We\'re done here, go back to start."
+    [
+      "OK, let's find an alternative. Would you like something mindful, playful, creative, or to get moving?"
+    ].sample
+  when MANTRA
+    [
+      "Please say to yourself 3 times - I am enough!\nGive me a thumbs up when you're done. :)"
+    ].sample
+  when MINDFUL_GOODBYE
+    [
+      "Pretty powerful Pauzz, right?\nStay Pauzzitive! I am here with you.\nTake Care!\nType anything to restart."
+    ].sample
+  when MINDFUL_STATEMENT
+    [
+      "Please say out loud:\n'May I be happy, May I be healthy,\nMay I be safe, May I live my life with ease.\nTry repeating this mantra thinking about someone you care about. Give me a thumbs up to continue?"
+    ].sample
+  when INSPIRATIONAL_QUOTE
+    [
+      "Take a moment to get inspired:\n'The challenge is not to be perfect, it\'s to be whole.' - Jane Fonda.\nInspiring, right?"  
+    ].sample
+  end
+  end
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -329,7 +349,31 @@ def act_on_craving_maybe
 end
 
 def alternative_action_menu
-  goto(START)
+  text = @text.downcase
+  if true # text.include?("min")
+    choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample
+    goto(choice) 
+  else
+    goto(PLAYFUL_ALTERNATIVE) 
+  end
 end
+
+def mantra
+  goto(MINDFUL_GOODBYE)
+end
+
+def mindful_goodbye
+  goto(WHAT_CRAVING_NOW)
+end
+ 
+def mindful_statement
+  goto(MINDFUL_GOODBYE)
+end
+
+def inspirational_quote
+  goto(MINDFUL_GOODBYE)
+end
+
+# goto(WHAT_CRAVING_NOW)
 
 get '/bla' do {refresh: true} end

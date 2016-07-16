@@ -8,14 +8,13 @@ https://dl.dropboxusercontent.com/u/10933856/Pauzz%20Messaging%20Bot%20Flow%20Ch
 - screens:
 http://www.justinmind.com/usernote/token.action?token=THFTB1
 stage 2:
-https://www.justinmind.com/usernote/prototypes/12688639/20302630/20619716/index.html#/screens/d12245cc-1680-458d-89dd-4f0d7fb22724
+https://www.justinmind.com/usernote/prototypes/12688639/20302630/20619716/index.html?token=THFTB1#/screens/d12245cc-1680-458d-89dd-4f0d7fb22724
 
 - alternative texts for states: 
 https://docs.google.com/document/d/1wWqrGFEOk60X4PO7bQ8m3Bq8dJBcsVOPRGc2lqUC7nI/edit
 
 # Direct URLs:
 - get state: http://localhost:9494/webhook?user_id=997788726969575&state=what_craving_now&text=chocolate
-
 
 # CSS Filewatcher:
 $ filewatcher '**/*.scss' 'scss $FILENAME > $FILENAME.css; echo "created"-$FILENAME; date'
