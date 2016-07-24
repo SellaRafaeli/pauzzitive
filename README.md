@@ -7,7 +7,7 @@ https://dl.dropboxusercontent.com/u/10933856/Pauzz%20Messaging%20Bot%20Flow%20Ch
 
 - screens:
 http://www.justinmind.com/usernote/token.action?token=THFTB1
-stage 2:
+stage 2 (sign in and then):
 https://www.justinmind.com/usernote/prototypes/12688639/20302630/20619716/index.html?token=THFTB1#/screens/d12245cc-1680-458d-89dd-4f0d7fb22724
 
 - alternative texts for states: 

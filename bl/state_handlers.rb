@@ -46,6 +46,16 @@ BUTT_CLENCH   = :BUTT_CLENCH
 WALK_100_STEPS= :WALK_100_STEPS
 GET_MOVING_GOODBYE = :GET_MOVING_GOODBYE
 
+#playful 
+MINDGAME1 = :MINDGAME1
+MINDGAME2 = :MINDGAME2 
+MINDGAME3 = :MINDGAME3
+MINDGAME4 = :MINDGAME4
+MINDGAME5 = :MINDGAME5
+MINDGAME_CORRECT   = :MINDGAME_CORRECT
+MINDGAME_INCORRECT = :MINDGAME_INCORRECT
+MINDGAME_GOODBYE   = :MINDGAME_GOODBYE
+
 #response upon ENTERING state
 def state_response(state, opts = {})
   name = get_user_attr(:name)
@@ -261,10 +271,9 @@ def state_response(state, opts = {})
       "Write me something good that happened to you today.",
       "Write me one of your best qualities."
     ].sample
-
   when CREATIVE_GOODBYE
     [
-      "You're lucky, aren't you?\nAren't you glad you Pauzzed?\nI am always here to help you Pauzz.\nSee you next time! Writ me anything next time you are craving something."
+      "You're lucky, aren't you?\nAren't you glad you Pauzzed?\nI am always here to help you Pauzz.\nSee you next time! Write me anything next time you are craving something."
     ].sample
   when GET_MOVING1
     [
@@ -293,6 +302,38 @@ def state_response(state, opts = {})
     [
       "Feeling good?\nPauzzing for a few moments is always the beginning of something good.\nGlad I was here to assist!\nBye for now!\nType anything the next time you have a craving, to summon me. :)"
     ].sample
+  when MINDGAME1 
+    [
+      "Let's get challenged for a moment...\nTry counting back from 100 to 0 in gaps of 7.\n100...93...\nLet's do it.\nSend me a thumbs-up when you're done.:)\n"
+    ].sample
+  when MINDGAME2 
+    [
+      "Time for some brain activity.\nSay your phone number backwards.\nReady?\nType it in, give me a thumbs-up when you're done."
+    ].sample
+  when MINDGAME3 
+    [
+      "Time for a history question:\nWho was the 2nd President of the United States?"
+    ].sample
+  when MINDGAME4
+    [
+      "Pop culture quiz:\nWho is the most famous of the Kardashian Sisters?"
+    ].sample
+  when MINDGAME5
+    [
+      "A puzzler:\nWhat weighs more? A pound of feathers or a pound of chocolate?"
+    ].sample
+  when MINDGAME_CORRECT
+    [
+      "Good job! That is indeed correct.\nGive me a thumbs up to continue."
+    ].sample
+  when MINDGAME_INCORRECT
+    [
+      "Hmm, not quite.\n#{opts[:correct_answer]}\nGive me a thumbs up to continue?"
+    ].sample
+  when MINDGAME_GOODBYE
+    [
+      "OK, good job exercising your brain!\nWhenever you need me again - type anything to go again. Bye for now!\n"
+    ]
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -409,8 +450,10 @@ def alternative_action_menu
     choice = [MANTRA,MINDFUL_STATEMENT,INSPIRATIONAL_QUOTE].sample    
   elsif text.include?('get') || text.include?('mov') 
     choice = [GET_MOVING1, GET_MOVING2].sample
+  elsif text.include?('pl')
+    choice = [MINDGAME1, MINDGAME2, MINDGAME3, MINDGAME4, MINDGAME5].sample
   else
-    choice = [BE_CREATIVE]
+    choice = [BE_CREATIVE].sample
   end
   goto(choice) 
 end
@@ -451,6 +494,30 @@ def stretch_arms()   goto(GET_MOVING_GOODBYE) end
 def jumping_jacks()  goto(GET_MOVING_GOODBYE) end
 def butt_clench()    goto(GET_MOVING_GOODBYE) end
 def walk_100_steps() goto(GET_MOVING_GOODBYE) end
+
+def mindgame1() goto(MINDGAME_GOODBYE) end
+def mindgame2() goto(MINDGAME_GOODBYE) end
+def mindgame3()
+  text = @text.downcase
+  text.include?('adams') ? z=MINDGAME_CORRECT : z=MINDGAME_INCORRECT
+  goto(z,correct_answer: 'The correct answer is John Adams.')
+end
+
+def mindgame4() 
+  text = @text.downcase
+  text.include?('kim') ? z=MINDGAME_CORRECT : z=MINDGAME_INCORRECT
+  goto(z,correct_answer: 'The correct answer is actually Kim.') 
+end
+
+def mindgame5() 
+  text = @text.downcase
+  text.include_any?('both','same','eq','no diff','none') ? z=MINDGAME_CORRECT : z=MINDGAME_INCORRECT
+  goto(z,correct_answer: 'They actually both weigh exactly the same: one pound.') 
+end
+
+def mindgame_correct() goto(MINDGAME_GOODBYE) end
+def mindgame_incorrect() goto(MINDGAME_GOODBYE) end
+def mindgame_goodbye() goto(WHAT_CRAVING_NOW) end
 
 def get_moving_goodbye() goto(WHAT_CRAVING_NOW) end
 # 
