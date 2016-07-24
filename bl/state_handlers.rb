@@ -220,7 +220,7 @@ def state_response(state, opts = {})
       "Great job at Pauzzing!\nYou did it! Enjoy being Pauzzitive...",
       "Good job Pauzzing!\nSuccess!\n Enjoy being 'Pauzzitive'... ;)",
       "Nice going.\nEnjoy your 'pauzzitive' state.",
-      "Good! Great!\nNow you are 'pauzzitive!"
+      "Good! Great!\nNow you are 'pauzzitive'!"
     ].sample
   when ACT_ON_CRAVING_MAYBE
     "To eat or not to eat...?\nTry to think what you would tell your best friend in this situation.\nIt is sometimes easier to give the perfect advice to a friend.\nAre you ready for your Pauzzitive alternative?"
@@ -308,7 +308,7 @@ def state_response(state, opts = {})
     ].sample
   when MINDGAME2 
     [
-      "Time for some brain activity.\nSay your phone number backwards.\nReady?\nType it in, give me a thumbs-up when you're done."
+      "Time for some brain activity.\nSay your phone number backwards.\nReady?\nType it in and send it when you're done :)"
     ].sample
   when MINDGAME3 
     [
@@ -333,7 +333,7 @@ def state_response(state, opts = {})
   when MINDGAME_GOODBYE
     [
       "OK, good job exercising your brain!\nWhenever you need me again - type anything to go again. Bye for now!\n"
-    ]
+    ].sample
   else 
     "missing text for state: #{state.to_s}"
   end
@@ -421,8 +421,8 @@ def reflection_and_choice
   end
 end
 
-def goodbye_success() goto(START) end
-def goodbye_failure() goto(START) end
+def goodbye_success() goto(WHAT_CRAVING_NOW) end
+def goodbye_failure() goto(WHAT_CRAVING_NOW) end
 
 def act_on_craving_yes
   if (@text == 'good') 
