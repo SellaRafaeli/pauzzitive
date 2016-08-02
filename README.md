@@ -1,5 +1,11 @@
 # pauzzitive - 
 
+- go directly to alternatives menu:
+http://localhost:9898/webhook?user_id=123&text=yep&state=act_on_craving_maybe
+http://pauzzitive.herokuapp.com/webhook?user_id=997788726969575&text=yep&state=act_on_craving_maybe
+
+
+
 # Links 
 - flow chart:
 https://dl.dropboxusercontent.com/u/10933856/Pauzz%20Messaging%20Bot%20Flow%20Chart%20%282%29.html
